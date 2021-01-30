@@ -31,10 +31,9 @@ class Game{
     
     player2 = createSprite(800,500);
     player2.addImage("player2", player_img);
-
-    players = [player1,player2];
-
+    players=[player1,player2];
         }
+        
     
     play(){
         
@@ -47,11 +46,15 @@ class Game{
                  var index =0;
                  drawSprites();
                  for(var plr in allPlayers){
-                       index = index+1;     
                     
-                       players[index -1].x = x;
+                    
+                     index = index+1;
+                     x = 500-allPlayers[plr].distance;
+                     y=500;
+                     
+                     players[index -1].x = x;
                      players[index - 1].y = y;
-                       
+                 
                      if(index === player.index){
                          
                          fill("black");
@@ -61,7 +64,10 @@ class Game{
                          
                      }
                     
-                     
+                         textSize(25);
+                         fill("white");
+                         text("Player 1 :" +allPlayers.player1.score,50,50);
+                        text("Player 2 :" + allPlayers.player2.score, 50, 100);
                  
                  }
                 
@@ -98,7 +104,15 @@ class Game{
                  }
                  
                   if (player.index !== null) {
-                     //fill code here, to destroy the objects.
+                      for (var i = 0; i < fruitGroup.length; i++) {
+                          if (fruitGroup.get(i).isTouching(players)) {
+                              fruitGroup.get(i).destroy();
+                              player.score =player.score+1;
+                              player.update();
+                              
+                          }
+                          
+                      }
                   }
                 
 
@@ -108,7 +122,6 @@ class Game{
          
 
     }
-
     end(){
        console.log("Game Ended");
     }
